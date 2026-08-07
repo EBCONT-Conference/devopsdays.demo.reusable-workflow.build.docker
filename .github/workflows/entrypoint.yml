@@ -1,0 +1,17 @@
+name: Build
+
+on:
+  workflow_call:
+
+permissions:
+  id-token: write
+  contents: read
+  packages: write
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    name: Docker - build & push
+    steps:
+      - name: Log simple message
+        run: echo "Hello from reusable Docker build workflow!"
