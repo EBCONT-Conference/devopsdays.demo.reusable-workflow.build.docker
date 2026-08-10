@@ -13,5 +13,35 @@ jobs:
     runs-on: ubuntu-latest
     name: Docker - build & push
     steps:
-      - name: Log simple message
-        run: echo "Hello from reusable Docker build workflow!"
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Parse YAML configuration
+        id: configuration
+        uses: EBCONT-Conference/devopsdays.demo.action.configuration-parser@v1
+        with:
+          schema: docker
+
+      - name: Validate JSON
+        env:
+          JSON: ${{ steps.configuration.outputs.json }}
+        shell: python
+        run: |
+          import json
+          import os
+          import sys
+          
+          print("Parsing JSON configuration...")
+          
+          raw_data = os.environ.get("JSON", "{}")
+          
+          try:
+              parsed = json.loads(raw_data)
+              if not parsed:
+                  print("::error::The JSON output is empty!")
+                  sys.exit(1)
+              print("Successfully parsed JSON configuration!")
+              print(f"::debug::Resulting JSON configuration:\n{json.dumps(parsed, indent=2)}")
+          except json.JSONDecodeError:
+              print("::error::JSON configuration is malformed and can not be parsed!")
+              sys.exit(1)
