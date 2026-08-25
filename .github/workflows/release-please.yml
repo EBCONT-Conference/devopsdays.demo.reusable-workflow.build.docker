@@ -1,16 +1,13 @@
-{
-  "packages": {
-    ".": {
-      "package-name": "devopsdays.demo.reusable-workflow.build.docker",
-      "changelog-path": "CHANGELOG.md",
-      "release-type": "simple",
-      "bump-minor-pre-major": false,
-      "bump-patch-for-minor-pre-major": false,
-      "draft": false,
-      "prerelease": false,
-      "include-component-in-tag": false
-    }
-  },
-  "plugins": ["sentence-case"],
-  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
-}
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+name: Release Please
+
+jobs:
+  release-please:
+    name: Release Please
+    uses: EBCONT-Conference/devopsdays.demo.reusable-workflow.release-please/.github/workflows/entrypoint.yml@v1
+    secrets: inherit
