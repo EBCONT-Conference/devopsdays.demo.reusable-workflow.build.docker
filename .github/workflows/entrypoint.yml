@@ -65,7 +65,7 @@ jobs:
 
       - name: Print deployment summary
         run: |
-          echo "## Deployment summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "## Build summary" >> "$GITHUB_STEP_SUMMARY"
           echo "Following parameters will be used for the build:" >> "$GITHUB_STEP_SUMMARY"
           echo "- **Path to Dockefile**: ${{ fromJSON(steps.configuration.outputs.json).dockerfile }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- **Runner**: ${{ fromJSON(steps.configuration.outputs.json).runner }}" >> "$GITHUB_STEP_SUMMARY"
