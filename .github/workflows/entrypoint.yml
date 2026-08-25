@@ -44,3 +44,30 @@ jobs:
           except json.JSONDecodeError:
               print("::error::JSON configuration is malformed and can not be parsed!")
               sys.exit(1)
+
+      - name: Determine tag
+        id: name
+        run: |
+          TAG="${{ github.ref_name }}"
+          SHA="${{ github.sha }}"
+          IMAGE_TAG=""
+
+          if [[ "$TAG" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            IMAGE_TAG="${TAG#v}"
+            echo "IMAGE_TAG is set to $IMAGE_TAG via tag"
+          else
+            IMAGE_TAG="sha-${SHA:0:7}"
+            echo "IMAGE_TAG is set to $IMAGE_TAG via branch (first eight chars of commit hash)"
+          fi
+          
+          export IMAGE_TAG=$IMAGE_TAG
+          echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Print deployment summary
+        run: |
+          echo "## Build summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "Following parameters will be used for the build:" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Path to Dockefile**: ${{ fromJSON(steps.configuration.outputs.json).dockerfile }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Runner**: ${{ fromJSON(steps.configuration.outputs.json).runner }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Image tag**: ${{ steps.name.outputs.image_tag }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "*Image tag value is saved to the environment variable IMAGE_TAG and can be used during deployment." >> "$GITHUB_STEP_SUMMARY"
