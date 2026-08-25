@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/EBCONT-Conference/devopsdays.demo.reusable-workflow.build.docker/compare/v1.1.0...v1.1.1) (2026-08-25)
+
+
+### Bug Fixes
+
+* Update readme ([aa45aab](https://github.com/EBCONT-Conference/devopsdays.demo.reusable-workflow.build.docker/commit/aa45aabf9f804de0febf71858b41d0384d194837))
+
 ## [1.1.0](https://github.com/EBCONT-Conference/devopsdays.demo.reusable-workflow.build.docker/compare/v1.0.0...v1.1.0) (2026-08-25)
 
 
