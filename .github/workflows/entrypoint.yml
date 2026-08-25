@@ -17,7 +17,7 @@ jobs:
 
       - name: Parse YAML configuration
         id: configuration
-        uses: EBCONT-Conference/devopsdays.demo.action.configuration-parser@v1
+        uses: EBCONT-Conference/devopsdays.demo.action.configuration-parser@feat/update-action
         with:
           schema: docker
 
